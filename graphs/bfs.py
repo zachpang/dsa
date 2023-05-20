@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def bfs(adj_lists, start, end=None):
     """
     Perform breadth-first search.
@@ -32,3 +35,18 @@ def bfs(adj_lists, start, end=None):
         level += 1
 
     return (levels_of_vertices, parents_of_vertices)
+
+
+def find_shortest_path(adj_lists, start, end):
+    """Find shortest path between start vertex and end vertex."""
+    (levels, parents) = bfs(adj_lists, start, end)
+
+    current = end
+    path = deque([end])
+
+    # trace path from end to start
+    while current != start:
+        path.appendleft(parents[current])
+        current = parents[current]
+
+    return path

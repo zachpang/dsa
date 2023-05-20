@@ -1,5 +1,5 @@
-from bfs import bfs
-
+from bfs import bfs, find_shortest_path
+from collections import deque
 
 # fixtures
 # 0 1 2 3 4 5 6 7
@@ -92,7 +92,19 @@ def test_bfs_undirected_graph():
     }
 
 
+def test_find_shortest_path():
+    start = vertices[0]
+    end = vertices[6]
+
+    # when
+    path = find_shortest_path(directed_adj_lists, start, end)
+
+    # then
+    assert path == deque([0, 2, 6])
+
+
 if __name__ == "__main__":
     test_bfs_directed_graph()
     test_bfs_directed_graph_given_end()
     test_bfs_undirected_graph()
+    test_find_shortest_path()
