@@ -36,7 +36,7 @@ def test_bfs_directed_graph():
     start = vertices[0]
 
     # when
-    (levels, parents) = bfs(start, directed_adj_lists)
+    (levels, parents) = bfs(directed_adj_lists, start)
 
     # then
     assert levels == {0: 0, 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 2}
@@ -52,11 +52,31 @@ def test_bfs_directed_graph():
     }
 
 
+def test_bfs_directed_graph_given_end():
+    start = vertices[0]
+    end = vertices[6]
+
+    # when
+    (levels, parents) = bfs(directed_adj_lists, start, end)
+
+    # then
+    assert levels == {0: 0, 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2}
+    assert parents == {0: None, 1: 0, 2: 0, 3: 0, 4: 1, 5: 1, 6: 2} or {
+        0: None,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 3,
+        5: 1,
+        6: 2,
+    }
+
+
 def test_bfs_undirected_graph():
     start = vertices[0]
 
     # when
-    (levels, parents) = bfs(start, undirected_adj_lists)
+    (levels, parents) = bfs(undirected_adj_lists, start)
 
     # then
     assert levels == {0: 0, 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 2}
@@ -74,4 +94,5 @@ def test_bfs_undirected_graph():
 
 if __name__ == "__main__":
     test_bfs_directed_graph()
+    test_bfs_directed_graph_given_end()
     test_bfs_undirected_graph()
