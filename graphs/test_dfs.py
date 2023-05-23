@@ -1,5 +1,5 @@
-from dfs import dfs_recursive, dfs_all
-
+from dfs import *
+from collections import deque
 
 # fixtures
 # 0 1 2 3 4 5 6 7
@@ -50,11 +50,10 @@ def test_dfs_recursive_directed_graph():
 
 
 def test_dfs_all_recursive_directed_graph():
-    # vertices 8 and 9 are separated from the other vertices
+    # vertices 8 and 9 are disconnected from the other vertices
     separate_vertices = [8, 9]
     all_vertices = vertices + separate_vertices
     adj_lists = directed_adj_lists + [[9], []]  # 8 -> 9
-
     visited = [False] * len(all_vertices)
 
     dfs_all(all_vertices, adj_lists, visited)
@@ -63,6 +62,31 @@ def test_dfs_all_recursive_directed_graph():
     assert visited == [True] * len(all_vertices)
 
 
+def test_dfs_iterative_directed_graph():
+    visited = [False] * len(vertices)
+    stack = deque()
+    stack.append(vertices[0])
+
+    dfs_iterative(directed_adj_lists, visited, stack)
+
+    assert visited == [True] * len(vertices)
+
+
+def test_dfs_all_iterative_directed_graph():
+    # vertices 8 and 9 are disconnected from the other vertices
+    separate_vertices = [8, 9]
+    all_vertices = vertices + separate_vertices
+    adj_lists = directed_adj_lists + [[9], []]  # 8 -> 9
+    visited = [False] * len(all_vertices)
+
+    dfs_all_iterative(all_vertices, adj_lists, visited)
+
+    assert visited == [True] * len(all_vertices)
+
+
 if __name__ == "__main__":
     test_dfs_recursive_directed_graph()
     test_dfs_all_recursive_directed_graph()
+
+    test_dfs_iterative_directed_graph()
+    test_dfs_all_iterative_directed_graph()
