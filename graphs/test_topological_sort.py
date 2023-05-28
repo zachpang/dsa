@@ -53,5 +53,25 @@ def test_topological_sort_dfs():
         assert str(err) == "backedge: Vertex(5) -> Vertex(0)"
 
 
+def test_topological_sort_kahn():
+    assert topological_sort_kahn(vertices, graph_without_cycles) == [
+        vertices[0],
+        vertices[1],
+        vertices[4],
+        vertices[3],
+        vertices[5],
+        vertices[2],
+    ]
+
+    try:
+        topological_sort_kahn(vertices, graph_with_cycles)
+
+        # Topological sort should fail due to cycle. Test fails.
+        assert False
+    except CycleDetectedError:
+        assert True
+
+
 if __name__ == "__main__":
     test_topological_sort_dfs()
+    test_topological_sort_kahn()
