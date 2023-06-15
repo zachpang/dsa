@@ -72,3 +72,42 @@ def quicksort_hoare(arr, lo, hi):
 
     quicksort_hoare(arr, lo, partitioning_index)
     quicksort_hoare(arr, partitioning_index + 1, hi)
+
+
+def bari_partitioning(arr, lo, hi):
+    """abdul bari's partitioning
+
+    A hybrid between hoare and lomuto. It uses 2 pointers from left and right,
+    while swapping the pivot into the sorted position on the last step
+    """
+    pivot = arr[lo]
+
+    l, r = lo, hi + 1
+
+    while True:
+        # hoare: 2 pointers
+        l += 1
+        while l < len(arr) and arr[l] <= pivot:
+            l += 1
+
+        r -= 1
+        while arr[r] > pivot:
+            r -= 1
+
+        if l > r:
+            # r is now in the left partition
+            # lomuto: pivot into sorted position
+            arr[lo], arr[r] = arr[r], arr[lo]
+            return r
+
+        arr[l], arr[r] = arr[r], arr[l]
+
+
+def quicksort_bari(arr, lo, hi):
+    if lo >= hi:
+        return
+
+    partition_index = bari_partitioning(arr, lo, hi)
+
+    quicksort_bari(arr, lo, partition_index - 1)
+    quicksort_bari(arr, partition_index + 1, hi)
